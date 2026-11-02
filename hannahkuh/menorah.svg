@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" width="600" height="420">
+  <rect width="600" height="420" fill="#f4f2ee"/>
+  <g fill="#fff" stroke="#bbb" stroke-width="2">
+    <rect x="150" y="70" width="14" height="150" rx="4"/><rect x="190" y="55" width="14" height="165" rx="4"/>
+    <rect x="230" y="80" width="14" height="140" rx="4"/><rect x="270" y="50" width="14" height="170" rx="4"/>
+    <rect x="310" y="80" width="14" height="140" rx="4"/><rect x="350" y="55" width="14" height="165" rx="4"/>
+    <rect x="390" y="70" width="14" height="150" rx="4"/><rect x="430" y="60" width="14" height="160" rx="4"/>
+  </g>
+  <path d="M110 230 Q300 330 490 230 L490 250 Q300 350 110 250 Z" fill="#f2e35a" stroke="#c9b92e" stroke-width="2"/>
+  <text x="300" y="395" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#999">[PLACEHOLDER IMAGE - replace menorah.svg]</text>
+</svg>

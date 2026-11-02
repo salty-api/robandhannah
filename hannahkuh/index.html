@@ -4,17 +4,133 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Hannahkuh</title>
+<title>Hannah-kuh 2027</title>
 <style>
-  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #faf7f2; font-family: Georgia, serif; color: #2b2b2b; text-align: center; padding: 16px; box-sizing: border-box; }
-  main { max-width: 480px; }
-  h1 { font-weight: 400; }
-  img { max-width: 92vw; max-height: 80vh; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.2); }
+  :root { --blue: #3d8be0; --ink: #fff; --soft: rgba(255,255,255,.78); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--blue); color: var(--ink); font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; -webkit-font-smoothing: antialiased; }
+  .caps { text-transform: uppercase; letter-spacing: .22em; }
+
+  /* invite */
+  .invite { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+  .copy { padding: 56px 40px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+  h1 { margin: 0; font-weight: 400; font-size: clamp(28px, 4vw, 44px); letter-spacing: .14em; text-transform: uppercase; }
+  .host { font-size: 14px; line-height: 2.1; }
+  .blurb { font-size: clamp(20px, 2.2vw, 26px); line-height: 1.4; max-width: 24em; margin: 0; }
+  .blurb + .blurb { margin-top: 1em; }
+  .detail { font-size: 14px; line-height: 2.3; }
+  .detail span { border-bottom: 1px solid var(--soft); padding-bottom: 3px; }
+  .rsvp { display: inline-block; background: #000; color: #dbe9fb; text-decoration: none; font-size: 22px; letter-spacing: .2em; padding: 18px 54px; border-radius: 999px; box-shadow: 0 6px 16px rgba(0,0,0,.25); }
+  .rsvp:hover { background: #1a1a1a; }
+  .art { background: #f4f2ee; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; align-self: start; min-height: 55vh; }
+  .art img { max-width: 100%; max-height: 70vh; }
+  .art .tag { font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; font-weight: 300; color: #222; font-size: clamp(26px, 3.4vw, 44px); letter-spacing: .22em; margin-top: 18px; text-align: center; }
+  .art .missing { color: #999; font-family: sans-serif; font-size: 14px; text-align: center; }
+
+  /* guest list */
+  .guests { padding: 90px 24px 110px; text-align: center; }
+  .guests h2 { margin: 0; font-weight: 400; font-size: clamp(26px, 3.4vw, 38px); letter-spacing: .16em; }
+  .count { font-size: 14px; margin: 34px 0 54px; }
+  .group { max-width: 760px; margin: 0 auto 52px; }
+  .group h3 { margin: 0 0 22px; font-weight: 400; font-size: 13px; color: var(--soft); }
+  .group ul { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 40px; }
+  .group li { font-size: clamp(19px, 2.2vw, 26px); line-height: 1.55; padding: 5px 0; break-inside: avoid; }
+  .group.single ul { columns: 1; }
+  .empty { color: var(--soft); font-style: italic; font-size: 18px; }
+
+  @media (max-width: 760px) {
+    .invite { grid-template-columns: 1fr; min-height: 0; }
+    .copy { padding: 44px 22px; }
+    .art { order: -1; min-height: 0; }
+    .group ul { columns: 1; }
+  }
 </style>
 </head>
 <body>
-<main>
-<h1>Hannahkuh</h1><p>Date, time, location, and RSVP details coming soon.</p>
-</main>
+
+<section class="invite">
+  <div class="copy">
+    <h1>Hannah-kuh</h1>
+    <div class="host caps">Hosted by<br>Rob &amp; Hannah</div>
+    <div>
+      <p class="blurb" id="blurb">Join us for night [N] of Hannukah and the [Nth] annual Hannah-kah.</p>
+      <p class="blurb">Festive food and drinks will be served.</p>
+    </div>
+    <div class="detail caps">
+      <span id="date">[Day, Month D, 2027]</span><br>
+      <span id="time">[Start time] - [End time] PST</span>
+    </div>
+    <div class="detail caps">
+      <span id="place">[Street address]<br>[City, State ZIP]</span>
+    </div>
+    <a class="rsvp caps" id="rsvp" href="#guests" title="RSVP link not set yet">RSVP</a>
+  </div>
+  <div class="art">
+    <img src="menorah.svg" alt="Banana menorah" onerror="this.remove(); document.getElementById('noimg').hidden = false;">
+    <div class="missing" id="noimg" hidden>Add menorah image to this folder</div>
+    <div class="tag">HANNAH-<br>KUH!</div>
+  </div>
+</section>
+
+<section class="guests" id="guests">
+  <h2 class="caps">Guest List</h2>
+  <div class="count caps" id="count"></div>
+  <div id="groups"></div>
+</section>
+
+<script>
+  /* ---- EDIT HERE ------------------------------------------------------
+     status: "going" | "maybe" | "declined" | "pending"
+     party:  number of people in the party (shown as "(2)" when above 1)
+     The entries below are placeholders. */
+  const EVENT = {
+    date: "",          // e.g. "Sunday, December 26, 2027"
+    start: "",         // e.g. "6:30PM"
+    end: "",           // e.g. "10:00PM"
+    place: "",         // HTML ok, e.g. "123 Main St<br>Los Angeles, CA 90000" (page is public)
+    rsvpUrl: ""        // [RSVP form link]; blank scrolls to the guest list
+  };
+  const GUESTS = [
+    { name: "[Guest name] & [Guest name]", party: 2, status: "going" },
+    { name: "[Guest name] & [Guest name]", party: 2, status: "going" },
+    { name: "[Guest name]", party: 1, status: "going" },
+    { name: "[Guest name]", party: 1, status: "going" },
+    { name: "[Guest name] & [Guest name]", party: 2, status: "maybe" },
+    { name: "[Guest name]", party: 1, status: "maybe" },
+    { name: "[Guest name] & [Guest name]", party: 2, status: "pending" },
+    { name: "[Guest name]", party: 1, status: "pending" },
+    { name: "[Guest name]", party: 1, status: "declined" }
+  ];
+  /* -------------------------------------------------------------------- */
+
+  const GROUPS = [
+    ["going", "Going"],
+    ["maybe", "Maybe"],
+    ["pending", "Awaiting reply"],
+    ["declined", "Can't make it"]
+  ];
+
+  if (EVENT.date) document.getElementById("date").textContent = EVENT.date;
+  if (EVENT.start) document.getElementById("time").textContent = EVENT.end ? EVENT.start + " - " + EVENT.end : EVENT.start;
+  if (EVENT.place) document.getElementById("place").innerHTML = EVENT.place;
+  if (EVENT.rsvpUrl) document.getElementById("rsvp").href = EVENT.rsvpUrl;
+
+  const people = g => g.party || 1;
+  const attending = GUESTS.filter(g => g.status === "going").reduce((n, g) => n + people(g), 0);
+  document.getElementById("count").textContent = attending + (attending === 1 ? " guest" : " guests") + " attending";
+
+  const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const root = document.getElementById("groups");
+  GROUPS.forEach(([key, label]) => {
+    const list = GUESTS.filter(g => g.status === key).sort((a, b) => a.name.localeCompare(b.name));
+    if (!list.length) return;
+    const n = list.reduce((s, g) => s + people(g), 0);
+    const div = document.createElement("div");
+    div.className = "group" + (list.length < 4 ? " single" : "");
+    div.innerHTML = '<h3 class="caps">' + label + " &middot; " + n + "</h3><ul>" +
+      list.map(g => "<li>" + esc(g.name) + (people(g) > 1 ? " (" + people(g) + ")" : "") + "</li>").join("") + "</ul>";
+    root.appendChild(div);
+  });
+</script>
 </body>
 </html>
