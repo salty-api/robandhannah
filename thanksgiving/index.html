@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thanksgiving | Rob &amp; Hannah</title>
-<meta name="description" content="Thanksgiving menu at Rob & Hannah's.">
+<title>Thanksgiving</title>
+<meta name="description" content="Thanksgiving menu.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -69,6 +69,55 @@
     margin: 56px auto 8px;
     opacity: .6;
   }
+  .timeline {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 56px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 16%; right: 16%;
+    top: 66px;
+    height: 1px;
+    background: var(--rule);
+  }
+  .timeline li {
+    flex: 1;
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .timeline .time {
+    font-size: 11px;
+    letter-spacing: .38em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-right: -.38em;
+  }
+  .timeline svg {
+    width: 56px; height: 56px;
+    margin: 10px 0 12px;
+    padding: 12px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    position: relative;
+  }
+  .timeline .cap {
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--muted);
+  }
   section { margin-top: 64px; }
   h2 {
     font-size: 11px;
@@ -128,10 +177,27 @@
 <body>
 <main>
   <header>
-    <div class="eyebrow">Rob &amp; Hannah &middot; Est. 2021</div>
     <h1>Thanks<em>giving</em></h1>
     <div class="sub">A menu for the evening</div>
   </header>
+
+  <ol class="timeline" aria-label="Schedule">
+    <li>
+      <span class="time">11am</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="M13 13l6 6"/><circle cx="19.8" cy="17.6" r="1.6"/><circle cx="17.6" cy="19.8" r="1.6"/></svg>
+      <span class="cap">Turkey goes in</span>
+    </li>
+    <li>
+      <span class="time">1pm</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="13" rx="5" ry="5.2"/><path d="M7.6 9.5C4 8.5 3.4 14 6 16.5M16.4 9.5C20 8.5 20.6 14 18 16.5"/><circle cx="10" cy="12" r=".6"/><circle cx="14" cy="12" r=".6"/><circle cx="12" cy="14.4" r=".9"/><path d="M12 15.3v1.4M10.6 17.2q1.4 1 2.8 0"/></svg>
+      <span class="cap">Roland &amp; Elise arrive<br>(Osbourne)</span>
+    </li>
+    <li>
+      <span class="time">4pm</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v5a2 2 0 0 0 4 0V3M8 10v11"/><path d="M17 21V3c-2 1-3.5 4-3.5 8 0 1.5 1 2.5 3.5 2.5"/></svg>
+      <span class="cap">Dinner</span>
+    </li>
+  </ol>
 
   <div class="divider"></div>
 
@@ -160,7 +226,6 @@
 
   <footer>
     Thank you for being here.
-    <span>Rob &amp; Hannah</span>
   </footer>
 </main>
 </body>
